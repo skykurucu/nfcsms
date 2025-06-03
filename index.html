@@ -43,11 +43,13 @@
 
 .logo {
   font-family: 'Orbitron', sans-serif;
-  font-size: 4rem;
+  font-size: 3.8rem;
   color: #00ccff;
   text-shadow: 0 0 15px #00ccff, 0 0 40px #00ccff;
   display: flex;
-  gap: 0.2em;
+  gap: 0.1em;
+  flex-wrap: wrap;
+  justify-content: center;
   animation: neonPulse 3s infinite ease-in-out;
 }
 
@@ -120,13 +122,15 @@ footer {
   position: fixed;
   z-index: 10;
   background: black;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   color: #00ff88;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  padding: 0 1rem;
+  text-align: center;
   animation: introFadeOut 3s forwards;
 }
 
