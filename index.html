@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FORZA // Cyber Identity</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORZA | Digital Presence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
@@ -13,8 +13,7 @@
       overflow: hidden;
       font-family: 'Share Tech Mono', monospace;
       color: #00ccff;
-    }/* Matrix animation background */
-canvas {
+    }canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -25,31 +24,58 @@ canvas {
 
 .overlay {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 2rem;
   text-align: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  animation: fadeIn 2s ease-out;
 }
 
-h1 {
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
   font-size: 4rem;
-  letter-spacing: 8px;
   color: #00ccff;
-  text-shadow: 0 0 20px #00ccff, 0 0 60px #00ccff;
-  animation: flicker 2.5s infinite alternate;
-  margin-bottom: 1rem;
+  text-shadow: 0 0 15px #00ccff, 0 0 40px #00ccff;
+  display: flex;
+  gap: 0.2em;
+  animation: neonPulse 3s infinite ease-in-out;
 }
 
-p.tagline {
-  font-size: 1.2rem;
+@keyframes neonPulse {
+  0%, 100% { text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff; }
+  50% { text-shadow: 0 0 25px #007799, 0 0 60px #00ccff; }
+}
+
+.tagline {
+  font-size: 1.1rem;
   color: #99e6ff;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   text-shadow: 0 0 5px #00ccff;
+  font-style: italic;
+}
+
+.terminal {
+  background: #001f2f;
+  color: #00ff88;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  width: 80%;
+  max-width: 600px;
+  margin: 1rem auto;
+  text-align: left;
+  box-shadow: 0 0 15px #00ccff66;
+  min-height: 60px;
 }
 
 .button-group {
@@ -65,10 +91,13 @@ p.tagline {
   background: transparent;
   color: #00ccff;
   font-size: 1rem;
-  border-radius: 8px;
-  transition: 0.3s ease;
+  border-radius: 10px;
+  transition: all 0.3s ease;
   cursor: pointer;
   text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 3;
 }
 
 .button:hover {
@@ -87,65 +116,91 @@ footer {
   z-index: 1;
 }
 
-@keyframes flicker {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% {
-    opacity: 1;
-  }
-  20%, 24%, 55% {
-    opacity: 0.4;
-  }
+.intro-screen {
+  position: fixed;
+  z-index: 10;
+  background: black;
+  width: 100%;
+  height: 100%;
+  color: #00ff88;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  animation: introFadeOut 3s forwards;
+}
+
+@keyframes introFadeOut {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; display: none; visibility: hidden; }
 }
 
   </style>
 </head>
 <body>
+  <div class="intro-screen">[ ACCESSING FORZA SYSTEM _ ]</div>
   <canvas id="matrix"></canvas>  <div class="overlay">
-    <h1>F O R Z A</h1>
-    <p class="tagline">cyber presence // verified | encoded identity</p><div class="button-group">
+    <div class="logo">F O R Z A</div>
+    <p class="tagline">Cyber Presence // Layered Identity & Code Auth</p><div class="terminal" id="terminal">
+  > initializing connection...
+</div>
+
+<div class="button-group">
   <button class="button" onclick="openInstagram()">Instagram</button>
   <button class="button" onclick="sendSMS()">SMS Gönder</button>
 </div>
 
   </div>  <footer>
-    © 2025 Forza | Powered by code & caffeine ☕
+    © 2025 FORZA | Built with code, logic and a dash of caffeine ☕
   </footer>  <script>
     function openInstagram() {
-      window.location.href = "intent://instagram.com/_u/noskillsemih/#Intent;package=com.instagram.android;scheme=https;end";
+      document.getElementById("terminal").innerText += "\n> connecting to Instagram...";
+      setTimeout(() => {
+        window.location.href = "intent://instagram.com/_u/noskillsemih/#Intent;package=com.instagram.android;scheme=https;end";
+      }, 1500);
     }
 
     function sendSMS() {
-      window.location.href = "sms:+905516315361?body=selam";
+      document.getElementById("terminal").innerText += "\n> sending encrypted message...";
+      setTimeout(() => {
+        window.location.href = "sms:+905516315361?body=selam";
+      }, 1500);
     }
 
-    // Matrix animation
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = "10";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array.from({ length: columns }).fill(1);
+    const katakana = "アァイィウヴエカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモラリルレロワヲン";
+    const binary = "01";
+    const symbols = katakana + binary;
+
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
 
     function drawMatrix() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       ctx.fillStyle = "#00ff00";
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        const text = symbols.charAt(Math.floor(Math.random() * symbols.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     }
 
-    setInterval(drawMatrix, 50);
+    setInterval(drawMatrix, 40);
+
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
