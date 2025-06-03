@@ -1,41 +1,113 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Seçim Yap</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
-  }
-  button {
-    display: block;
-    width: 200px;
-    margin: 20px auto;
-    padding: 15px;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    background-color: #3897f0;
-    color: white;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FORZA</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+      letter-spacing: 15px;
+      margin-bottom: 40px;
+      color: #00ff00;
+      text-shadow: 0 0 20px #00ff00;
+    }
+
+    .button {
+      background: transparent;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .button:hover {
+      background-color: #00ff00;
+      color: black;
+      box-shadow: 0 0 15px #00ff00;
+    }
+  </style>
 </head>
 <body>
-<h1>Hoşgeldin!</h1>
-<button onclick="openInstagram()">Instagram Profilim</button>
-<button onclick="sendSMS()">SMS Gönder</button>
+  <canvas id="matrix"></canvas>
+  <div class="content">
+    <h1>F&nbsp;O&nbsp;R&nbsp;Z&nbsp;A</h1>
+    <button class="button" onclick="openInstagram()">Instagram</button>
+    <button class="button" onclick="sendSMS()">SMS Gönder</button>
+  </div>
 
-<script>
-  function openInstagram() {
-    window.location.href = "intent://instagram.com/_u/noskillsemih/#Intent;package=com.instagram.android;scheme=https;end";
-  }
-  function sendSMS() {
-    window.location.href = "sms:+905516315361?body=selam";
-  }
-</script>
+  <script>
+    function openInstagram() {
+      window.location.href = "intent://instagram.com/_u/noskillsemih/#Intent;package=com.instagram.android;scheme=https;end";
+    }
+
+    function sendSMS() {
+      window.location.href = "sms:+905516315361?body=selam";
+    }
+
+    // Matrix Yağmur Efekti
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+  </script>
 </body>
 </html>
