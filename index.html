@@ -19,10 +19,12 @@
 
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100vw;
-  height: 100vh;
+  max-width: 100%;
+  height: auto;
   backdrop-filter: blur(8px);
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
@@ -36,6 +38,7 @@
 h1, h2 {
   text-align: center;
   animation: glitch 1s infinite alternate;
+  margin: 0.5em 0;
 }
 
 @keyframes glitch {
@@ -99,7 +102,7 @@ button:hover {
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const katakana = "アカサタナハマヤラワ0123456789$@#%";
+    const katakana = "アカサタナハマヤラワ0123456789$@#%<>|!+=~";
     const columns = canvas.width / 20;
     const drops = Array(Math.floor(columns)).fill(1);
 
@@ -115,7 +118,7 @@ button:hover {
         drops[x]++;
       });
     }
-    setInterval(draw, 35);
+    setInterval(draw, 33);
 
     let registeredName = "";
     let generatedCode = "";
