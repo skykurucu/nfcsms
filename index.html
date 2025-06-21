@@ -1,164 +1,164 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Forza Protocol</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORZA Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Courier New', monospace;
-      overflow: hidden;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: black;
-      color: #00ff9f;
-    }canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  max-width: 100%;
-  height: auto;
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-h1, h2 {
-  text-align: center;
-  animation: glitch 1s infinite alternate;
-  margin: 0.5em 0;
-}
-
-@keyframes glitch {
-  0% { text-shadow: 2px 2px #ff00c8; }
-  100% { text-shadow: -2px -2px #00fff7; }
-}
-
-input, button {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid #00ff9f;
-  color: #00ff9f;
-  padding: 12px;
-  margin: 10px;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  width: 250px;
-  text-align: center;
-}
-
-button:hover {
-  background: #00ff9f;
-  color: black;
-  box-shadow: 0 0 10px #00ff9f;
-  cursor: pointer;
-}
-
-.hidden { display: none; }
-
-.panel button {
-  width: 90%;
-  max-width: 300px;
-}
-
+      color: #00ffcc;
+      overflow: hidden;
+      position: relative;
+    }
+    .matrix {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .container {
+      z-index: 1;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border: 2px solid #00ffcc;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ffcc;
+      max-width: 90%;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      border: 2px solid #00ffcc;
+      background: transparent;
+      color: #00ffcc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: transparent;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 5px;
+    }
+    button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>  <div class="overlay" id="step1">
+  <div class="matrix">
+    <canvas id="matrix"></canvas>
+  </div>  <div class="container" id="registerContainer">
     <h1>FORZA REGISTRATION</h1>
-    <input type="text" id="nameInput" placeholder="Adını Gir" />
-    <button onclick="generateCode()">Kayıt Ol</button>
-  </div>  <div class="overlay hidden" id="step2">
-    <h2>Şifren: <span id="codeDisplay"></span></h2>
-    <p>Devam etmek için şifreni hatırla.</p>
-    <button onclick="showLogin()">Giriş Yap</button>
-  </div>  <div class="overlay hidden" id="step3">
-    <h1>FORZA GİRİŞ</h1>
-    <input type="text" id="loginName" placeholder="Adını Yaz" />
-    <input type="text" id="loginCode" placeholder="3 Haneli Şifre" />
-    <button onclick="login()">Giriş</button>
-  </div>  <div class="overlay hidden" id="panel">
-    <h1>🧬 FORZA PANEL</h1>
-    <div class="panel">
-      <button onclick="openInstagram()">📸 Instagram</button>
-      <button onclick="sendSMS()">📩 SMS Gönder</button>
-      <button onclick="sendMail()">📧 Mail Gönder</button>
-    </div>
+    <input type="text" placeholder="Adını Gir" id="nameInput">
+    <br>
+    <button onclick="registerUser()">Kayıt Ol</button>
+  </div>  <div class="container hidden" id="loginContainer">
+    <h1>GİRİŞ</h1>
+    <input type="text" placeholder="Ad" id="loginName">
+    <input type="text" placeholder="Şifre" id="loginCode">
+    <br>
+    <button onclick="loginUser()">Giriş Yap</button>
+  </div>  <div class="container hidden" id="profileContainer">
+    <h1>FORZA PANEL</h1>
+    <button onclick="window.open('https://www.instagram.com/noskillsemih', '_blank')">Instagram</button>
+    <button onclick="sendSMS()">SMS Gönder</button>
+    <button onclick="sendEmail()">Mail Gönder</button>
   </div>  <script>
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const katakana = "アカサタナハマヤラワ0123456789$@#%<>|!+=~";
-    const columns = canvas.width / 20;
-    const drops = Array(Math.floor(columns)).fill(1);
+    let katakana = "アァイィウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+    katakana = katakana.split("");
+
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = new Array(Math.floor(columns)).fill(1);
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#00ff9f";
-      ctx.font = "16px monospace";
-      drops.forEach((y, x) => {
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
         const text = katakana[Math.floor(Math.random() * katakana.length)];
-        ctx.fillText(text, x * 20, y * 20);
-        if (y * 20 > canvas.height && Math.random() > 0.975) drops[x] = 0;
-        drops[x]++;
-      });
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
     }
     setInterval(draw, 33);
 
-    let registeredName = "";
-    let generatedCode = "";
-
-    function generateCode() {
+    function registerUser() {
       const name = document.getElementById("nameInput").value.trim();
-      if (!name) return alert("Adını gir");
-      registeredName = name.toLowerCase();
-      generatedCode = Math.floor(100 + Math.random() * 900).toString();
-      document.getElementById("codeDisplay").innerText = generatedCode;
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("step2").classList.remove("hidden");
+      if (!name) return alert("Lütfen adını gir.");
+
+      const code = Math.floor(100 + Math.random() * 900);
+      localStorage.setItem("forzaUser", JSON.stringify({ name, code }));
+      alert(`Şifreniz: ${code}`);
+
+      document.getElementById("registerContainer").classList.add("hidden");
+      document.getElementById("loginContainer").classList.remove("hidden");
     }
 
-    function showLogin() {
-      document.getElementById("step2").classList.add("hidden");
-      document.getElementById("step3").classList.remove("hidden");
-    }
+    function loginUser() {
+      const loginName = document.getElementById("loginName").value.trim();
+      const loginCode = document.getElementById("loginCode").value.trim();
+      const user = JSON.parse(localStorage.getItem("forzaUser"));
 
-    function login() {
-      const name = document.getElementById("loginName").value.trim().toLowerCase();
-      const code = document.getElementById("loginCode").value.trim();
-      if (name === registeredName && code === generatedCode) {
-        document.getElementById("step3").classList.add("hidden");
-        document.getElementById("panel").classList.remove("hidden");
+      if (user && user.name === loginName && user.code.toString() === loginCode) {
+        document.getElementById("loginContainer").classList.add("hidden");
+        document.getElementById("profileContainer").classList.remove("hidden");
       } else {
-        alert("Hatalı isim veya şifre.");
+        alert("Hatalı giriş bilgileri.");
       }
     }
 
-    function openInstagram() {
-      window.open("https://www.instagram.com/noskillsemih", "_blank");
-    }
-
     function sendSMS() {
-      window.location.href = "sms:+905516315361?body=Selam%20Semih%2C%20Forza%20sisteminden%20ula%C5%9Ft%C4%B1m.";
+      window.location.href = "sms:+905516315361?body=Selam!";
     }
 
-    function sendMail() {
-      window.location.href = "mailto:semihkeskinn7@gmail.com?subject=Forza%20ile%20ileti%C5%9Fim&body=Merhaba%20Semih%2C%20seninle%20ileti%C5%9Fime%20ge%C3%A7mek%20istiyorum.";
+    function sendEmail() {
+      window.location.href = "mailto:semihkeskinn7@gmail.com?subject=Selam&body=Görüşelim.";
     }
   </script></body>
 </html>
